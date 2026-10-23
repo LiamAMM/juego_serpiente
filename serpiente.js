@@ -2,6 +2,12 @@
 // 1. Capturamos el canvas y su contexto de dibujo
 const canvas = document.getElementById("canvasJuego");
 const ctx = canvas.getContext("2d");
+const serpiente = [
+  { x: 11, y: 10 },
+  { x: 11, y: 9 },
+  { x: 10, y: 9 },
+  { x: 9, y: 9 },
+];
 
 let TAMANIO_CELDA = 25;
 
@@ -31,28 +37,32 @@ function dibujarTablero() {
   ctx.stroke();
 }
 
-function pintarParte(lineaX, lineaY) {
+function pintarParte(lineaX, lineaY, color) {
   let x = lineaX * TAMANIO_CELDA;
   let y = lineaY * TAMANIO_CELDA;
 
-  // Configurar color de relleno y pintar el cuadrado
-  ctx.fillStyle = "#ef4444"; // Color rojo (según la prueba obligatoria)
+  ctx.fillStyle = color;
   ctx.fillRect(x, y, TAMANIO_CELDA, TAMANIO_CELDA);
-
-  // Configurar color del borde y dibujar borde
   ctx.strokeStyle = "#000000";
   ctx.strokeRect(x, y, TAMANIO_CELDA, TAMANIO_CELDA);
+}
+
+function pintarSerpiente() {
+  let parte;
+  for (let i = 0; i < serpiente.length; i++) {
+    parte = serpiente[i];
+    if (i == 0) {
+      pintarParte(parte.x, parte.y, "#facc15");
+    } else {
+      pintarParte(parte.x, parte.y, "#ef4444");
+    }
+  }
 }
 
 function dibujarTodo() {
   limpiarCanvas();
   dibujarTablero();
-  pintarParte(5, 5);
-  pintarParte(10, 2);
-  pintarParte(10, 23);
-  pintarParte(23, 15);
-  pintarParte(0, 15);
-  pintarParte(23, 23);
+  pintarSerpiente();
 }
 
 
